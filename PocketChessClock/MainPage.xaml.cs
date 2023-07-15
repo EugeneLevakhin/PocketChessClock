@@ -7,7 +7,8 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-	}
+        DeviceDisplay.Current.KeepScreenOn = true;
+    }
 
 	private void OnCounterClicked(object sender, EventArgs e)
 	{
