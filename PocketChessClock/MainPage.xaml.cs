@@ -1,25 +1,16 @@
-﻿namespace PocketChessClock;
+﻿using PocketChessClock.ViewModels;
+
+namespace PocketChessClock;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-
-	public MainPage()
-	{
-		InitializeComponent();
+    public MainPage()
+    {
+        InitializeComponent();
         DeviceDisplay.Current.KeepScreenOn = true;
+
+        MainPageViewModel mainPageViewModel = new MainPageViewModel();
+        App.MainPageViewModel = mainPageViewModel;
+        BindingContext = mainPageViewModel;
     }
-
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
 }
-

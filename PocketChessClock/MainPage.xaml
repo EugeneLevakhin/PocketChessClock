@@ -2,41 +2,70 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PocketChessClock.MainPage"
-             NavigationPage.HasNavigationBar="False">
+             xmlns:viewModels="clr-namespace:PocketChessClock.ViewModels"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <ContentPage.BindingContext>
+        <viewModels:MainPageViewModel />
+    </ContentPage.BindingContext>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+    <ContentPage.Resources>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+        <Style TargetType="Button" x:Key="ClockSideButtonStyle">
+            <Setter Property="BackgroundColor" Value="ForestGreen" />
+            <Setter Property="FontSize" Value="96" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+        <Style TargetType="Button" x:Key="MenuButtonStyle">
+            <Setter Property="BackgroundColor" Value="SeaGreen" />
+        </Style>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+    </ContentPage.Resources>
 
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid BackgroundColor="DarkSlateGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+
+        <Button 
+            Grid.Row="0" 
+            Style="{StaticResource ClockSideButtonStyle}" 
+            Text="{Binding FirstSidePlayer.TimeValue}"
+            Command="{Binding FirstSideClockButtonCommand}"
+            CommandParameter="0"
+            Rotation="180">
+        </Button>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Style="{StaticResource MenuButtonStyle}" Text="menu"></Button>
+            <Button Grid.Column="3" Style="{StaticResource MenuButtonStyle}" Text="pause"></Button>
+            <Button Grid.Column="5" Style="{StaticResource MenuButtonStyle}" Text="reset"></Button>
+        </Grid>
+
+        <Button 
+            Grid.Row="2"
+            Style="{StaticResource ClockSideButtonStyle}" 
+            Text="{Binding SecondSidePlayer.TimeValue}"
+            Command="{Binding SecondSideClockButtonCommand}"
+            CommandParameter="1">
+        </Button>
+
+    </Grid>
 
 </ContentPage>
